@@ -3,12 +3,9 @@ import {ContextProvidedChangeIndicator} from '@sanity/base/lib/change-indicators
 import {ArraySchemaType, isValidationMarker, Marker, Path, SchemaType} from '@sanity/types'
 import * as PathUtils from '@sanity/util/paths'
 import LinkIcon from 'part:@sanity/base/link-icon'
-import {FormFieldPresence, FieldPresence, PresenceOverlay} from '@sanity/base/presence'
+import {FieldPresence, FormFieldPresence, PresenceOverlay} from '@sanity/base/presence'
 import Button from 'part:@sanity/components/buttons/default'
 import IntentButton from 'part:@sanity/components/buttons/intent'
-import DefaultDialog from 'part:@sanity/components/dialogs/default'
-import FullscreenDialog from 'part:@sanity/components/dialogs/fullscreen'
-import PopoverDialog from 'part:@sanity/components/dialogs/popover'
 import EditItemFold from 'part:@sanity/components/edititem/fold'
 import {createDragHandle} from 'part:@sanity/components/lists/sortable'
 import ValidationStatus from 'part:@sanity/components/validation/status'
@@ -22,6 +19,7 @@ import ConfirmButton from '../ConfirmButton'
 import {ItemValue} from '../typedefs'
 import InvalidItem from '../InvalidItem'
 import {hasFocusInPath, isEmpty, pathSegmentFrom} from './helpers'
+import {Box, Dialog, Layer, Popover} from '@sanity/ui'
 
 import styles from './ArrayInputListItem.css'
 
@@ -189,12 +187,23 @@ export class ArrayInputListItem extends React.PureComponent<ArrayInputListItemPr
 
     if (options.editModal === 'fullscreen') {
       return (
-        <FullscreenDialog title={title} onClose={this.handleEditStop} isOpen>
-          {content}
-        </FullscreenDialog>
+        <Layer>
+          <Dialog
+            width="auto"
+            id={item._key}
+            onClose={this.handleEditStop}
+            key={item._key}
+            header={title}
+          >
+            <PresenceOverlay margins={[0, 0, 1, 0]}>
+              <Box padding={4}>{content}</Box>
+            </PresenceOverlay>
+          </Dialog>
+        </Layer>
       )
     }
 
+    // TODO(@benedicteb, 2020-12-04) Make a plan for what to do with fold
     if (options.editModal === 'fold') {
       return (
         <div>
@@ -207,23 +216,33 @@ export class ArrayInputListItem extends React.PureComponent<ArrayInputListItemPr
 
     if (options.editModal === 'popover') {
       return (
-        <PopoverDialog
+        <Popover
           title={title}
-          onClose={this.handleEditStop}
-          onEscape={this.handleEditStop}
-          onClickOutside={this.handleEditStop}
-          placement="auto"
+          content={
+            <PresenceOverlay margins={[0, 0, 1, 0]}>
+              <Box padding={4}>{content}</Box>
+            </PresenceOverlay>
+          }
           referenceElement={this.innerElement}
-        >
-          <PresenceOverlay margins={[0, 0, 1, 0]}>{content}</PresenceOverlay>
-        </PopoverDialog>
+          open
+        />
       )
     }
 
     return (
-      <DefaultDialog onClose={this.handleEditStop} key={item._key} title={title}>
-        <PresenceOverlay margins={[0, 0, 1, 0]}>{content}</PresenceOverlay>
-      </DefaultDialog>
+      <Layer>
+        <Dialog
+          width={1}
+          id={item._key}
+          onClose={this.handleEditStop}
+          key={item._key}
+          header={title}
+        >
+          <PresenceOverlay margins={[0, 0, 1, 0]}>
+            <Box padding={4}>{content}</Box>
+          </PresenceOverlay>
+        </Dialog>
+      </Layer>
     )
   }
 
