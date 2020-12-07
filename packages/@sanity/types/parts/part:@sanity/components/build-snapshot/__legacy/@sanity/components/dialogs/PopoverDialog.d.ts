@@ -19,6 +19,9 @@ interface PopoverDialogProps extends PopoverDialogChildrenProps {
   placement?: Placement
   referenceElement?: HTMLElement | null
   size?: 'small' | 'medium' | 'large' | 'auto'
+  /**
+   * @deprecated
+   */
   useOverlay?: boolean
   portal?: boolean
 }

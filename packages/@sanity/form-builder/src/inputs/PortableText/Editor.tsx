@@ -14,8 +14,8 @@ import {
   usePortableTextEditor,
 } from '@sanity/portable-text-editor'
 import {Marker} from '@sanity/types'
+import {useLayer} from '@sanity/ui'
 import {FOCUS_TERMINATOR} from '@sanity/util/paths'
-import {useLayer} from 'part:@sanity/components/layer'
 import {ScrollContainer} from 'part:@sanity/components/scroll'
 import React, {useMemo, useCallback, useEffect, useState} from 'react'
 import PatchEvent from '../../PatchEvent'
@@ -74,8 +74,7 @@ function PortableTextSanityEditor(props: Props) {
 
   const editor = usePortableTextEditor()
   const ptFeatures = useMemo(() => PortableTextEditor.getPortableTextFeatures(editor), [])
-  const layer = useLayer()
-  const isTopLayer = layer.depth === layer.size
+  const {isTopLayer} = useLayer()
 
   const handleOpenObjectHotkey = (
     event: React.BaseSyntheticEvent,

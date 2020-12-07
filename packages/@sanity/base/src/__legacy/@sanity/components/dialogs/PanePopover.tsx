@@ -1,3 +1,4 @@
+import {Layer} from '@sanity/ui'
 import React from 'react'
 import CheckCircleIcon from 'part:@sanity/base/circle-check-icon'
 import WarningIcon from 'part:@sanity/base/warning-icon'
@@ -35,11 +36,12 @@ export default class PanePopover extends React.PureComponent<PanePopoverProps> {
     const iconNode = this.iconKind()
 
     return (
-      <div
+      <Layer
         aria-label={kind}
         aria-describedby={`popoverTitle-${kind}-${id}`}
         className={classNames(styles.root, styles.dialog)}
         data-kind={kind}
+        depth={1060}
       >
         <div className={styles.inner}>
           <div className={styles.content}>
@@ -55,7 +57,7 @@ export default class PanePopover extends React.PureComponent<PanePopoverProps> {
             {children && <div className={styles.children}>{children}</div>}
           </div>
         </div>
-      </div>
+      </Layer>
     )
   }
 }

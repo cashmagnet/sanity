@@ -1,4 +1,5 @@
 import {UserAvatar} from '@sanity/base/components'
+import {Layer} from '@sanity/ui'
 import React from 'react'
 import CloseIcon from 'part:@sanity/base/close-icon'
 import SignOutIcon from 'part:@sanity/base/sign-out-icon'
@@ -28,7 +29,7 @@ function SideMenu(props: Props) {
   const tabIndex = isOpen ? 0 : -1
 
   return (
-    <div className={className}>
+    <Layer className={className} depth={4001}>
       <div>
         <div className={styles.header}>
           <div className={styles.headerMain}>
@@ -77,7 +78,7 @@ function SideMenu(props: Props) {
           </div>
         </div>
       </div>
-    </div>
+    </Layer>
   )
 }
 

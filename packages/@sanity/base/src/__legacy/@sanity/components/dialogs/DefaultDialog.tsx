@@ -1,14 +1,13 @@
 /* eslint-disable react/no-unused-prop-types */
 
+import {Layer, Portal, useClickOutside, useLayer} from '@sanity/ui'
 import classNames from 'classnames'
 import CloseIcon from 'part:@sanity/base/close-icon'
 import Button from 'part:@sanity/components/buttons/default'
 import {ContainerQuery} from 'part:@sanity/components/container-query'
 import styles from 'part:@sanity/components/dialogs/default-style'
-import {Layer, useLayer} from 'part:@sanity/components/layer'
 import {ScrollContainer} from 'part:@sanity/components/scroll'
 import React, {createElement, useCallback, useEffect, useState} from 'react'
-import {useClickOutside} from '../hooks'
 import {DefaultDialogActions} from './DefaultDialogActions'
 import {DialogAction, DialogColor} from './types'
 
@@ -29,7 +28,21 @@ interface DefaultDialogProps {
 }
 
 function DefaultDialog(props: DefaultDialogProps) {
-  return <Layer>{createElement(DefaultDialogChildren, props)}</Layer>
+  const {actions, className: classNameProp, color, padding = 'medium', size = 'medium'} = props
+  const hasActions = actions && actions.length > 0
+
+  return (
+    <Portal>
+      <Layer
+        className={classNames(styles.root, hasActions && styles.hasFunctions, classNameProp)}
+        data-dialog-color={color}
+        data-dialog-padding={padding}
+        data-dialog-size={size}
+      >
+        {createElement(DefaultDialogChildren, props)}
+      </Layer>
+    </Portal>
+  )
 }
 
 export default DefaultDialog
@@ -39,34 +52,29 @@ function DefaultDialogChildren(props: DefaultDialogProps) {
     actions,
     actionsAlign,
     children,
-    className: classNameProp,
     color,
     onAction,
     onClose,
     onClickOutside,
     onEscape,
-    padding = 'medium',
     showCloseButton = true,
-    size = 'medium',
     title,
   } = props
 
-  const layer = useLayer()
-  const isTopLayer = layer.depth === layer.size
+  const {isTopLayer} = useLayer()
   const [cardElement, setCardElement] = useState<HTMLDivElement | null>(null)
   const renderCloseButton = onClose && showCloseButton
   const renderFloatingCloseButton = !title && renderCloseButton
   const contentClassName =
     actions && actions.length > 0 ? styles.content : styles.contentWithoutFooter
 
-  useClickOutside(
-    useCallback(() => {
-      if (isTopLayer) {
-        if (onClickOutside) onClickOutside()
-      }
-    }, [isTopLayer, onClickOutside]),
-    [cardElement]
-  )
+  const handleClickOutside = useCallback(() => {
+    if (isTopLayer) {
+      if (onClickOutside) onClickOutside()
+    }
+  }, [isTopLayer, onClickOutside])
+
+  useClickOutside(handleClickOutside, [cardElement])
 
   const closeButtonColor =
     color && ['danger', 'success', 'warning'].includes(color) ? 'white' : undefined
@@ -88,15 +96,8 @@ function DefaultDialogChildren(props: DefaultDialogProps) {
     }
   }, [isTopLayer, onClose, onEscape])
 
-  const hasActions = actions && actions.length > 0
-
   return (
-    <ContainerQuery
-      className={classNames(styles.root, hasActions && styles.hasFunctions, classNameProp)}
-      data-dialog-color={color}
-      data-dialog-padding={padding}
-      data-dialog-size={size}
-    >
+    <ContainerQuery className={styles.containerQuery}>
       <div className={styles.overlay} />
 
       <div className={styles.card} ref={setCardElement}>

@@ -1,5 +1,6 @@
 import {StructureBuilder as S} from '@sanity/structure'
 import {InitialValueTemplateItem} from '@sanity/structure/lib/InitialValueTemplateItem'
+import {Layer} from '@sanity/ui'
 import classNames from 'classnames'
 import {negate} from 'lodash'
 import {MenuButton} from 'part:@sanity/components/menu-button'
@@ -385,7 +386,7 @@ class DefaultPane extends React.PureComponent<DefaultPaneProps, State> {
         onClick={this.handleRootClick}
         ref={this.setRootElement}
       >
-        <div className={styles.header}>
+        <Layer className={styles.header} depth={900}>
           <div className={styles.headerContent}>
             <div className={styles.titleContainer}>
               <h2 className={styles.title} onClick={this.handleTitleClick}>
@@ -397,7 +398,7 @@ class DefaultPane extends React.PureComponent<DefaultPaneProps, State> {
 
           {/* To render tabs and similar */}
           {headerViewMenuNode && <div className={styles.headerViewMenu}>{headerViewMenuNode}</div>}
-        </div>
+        </Layer>
 
         {hasTabs ? (
           <TabPanel
@@ -412,9 +413,12 @@ class DefaultPane extends React.PureComponent<DefaultPaneProps, State> {
         )}
 
         {footer && (
-          <div className={hasTabs && hasSiblings ? styles.hoverFooter : styles.stickyFooter}>
+          <Layer
+            className={hasTabs && hasSiblings ? styles.hoverFooter : styles.stickyFooter}
+            depth={900}
+          >
             {footer}
-          </div>
+          </Layer>
         )}
       </div>
     )

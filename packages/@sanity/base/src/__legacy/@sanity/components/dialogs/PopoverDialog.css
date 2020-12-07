@@ -10,16 +10,6 @@
   }
 } */
 
-@keyframes popoverDialogBackgroundFadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 :root {
   --array--add-item-color: var(--brand-primary);
   --array--add-item-triangle-color: color(
@@ -28,19 +18,22 @@
 }
 
 .overlay {
-  position: absolute;
+  /* Override Sanity UI */
+  @nest &.overlay {
+    position: absolute;
+  }
+
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: var(--backdrop-color);
-  opacity: 0.75;
-  z-index: var(--zindex-portal);
+  background-color: color(var(--backdrop-color) alpha(0));
   pointer-events: none;
-  animation-name: popoverDialogBackgroundFadeIn;
-  animation-duration: 0.2s;
-  animation-timing-function: cubic-bezier(0, 0, 0, 1);
-  animation-iteration-count: once;
+  transition: background-color 100ms;
+
+  @nest &.visible {
+    background-color: var(--backdrop-color);
+  }
 }
 
 .root {
@@ -70,19 +63,19 @@
   @nest &[data-popper-reference-hidden='true'] {
     display: none;
   }
+
+  @nest & > div {
+    max-height: 50vh;
+  }
+
+  @nest .root[data-color='danger'] & > div {
+    background-color: var(--state-danger-color);
+    color: var(--state-danger-color--inverted);
+  }
 }
 
 .arrow {
   /* Popover's arrow element */
-}
-
-.card {
-  max-height: 50vh;
-
-  @nest .root[data-color='danger'] & {
-    background-color: var(--state-danger-color);
-    color: var(--state-danger-color--inverted);
-  }
 }
 
 .popperAnimation {

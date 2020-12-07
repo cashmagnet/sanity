@@ -10,7 +10,7 @@
 
   @media (--max-screen-medium) {
     position: fixed;
-    z-index: var(--zindex-portal);
+    /* z-index: var(--zindex-portal); */
   }
 }
 

@@ -124,7 +124,7 @@
 
   @media (--max-screen-medium) {
     position: absolute;
-    z-index: var(--zindex-drawer);
+    /* z-index: var(--zindex-drawer); */
     width: 100%;
 
     @nest & > div {
@@ -143,7 +143,7 @@
     padding: var(--small-padding);
 
     @nest &.searchIsOpen {
-      z-index: var(--zindex-drawer);
+      /* z-index: var(--zindex-drawer); */
     }
   }
 }

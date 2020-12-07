@@ -1,3 +1,4 @@
+import {Layer} from '@sanity/ui'
 import classNames from 'classnames'
 import CloseIcon from 'part:@sanity/base/close-icon'
 import React from 'react'
@@ -16,7 +17,7 @@ function FullscreenMessageDialog(props: Props) {
   const className = classNames(styles.root, props.color && styles[`color_${props.color}`])
 
   return (
-    <div className={className}>
+    <Layer className={className} depth={1060}>
       <div className={styles.card}>
         <div className={styles.cardHeader}>
           <h2 className={styles.cardTitle}>{props.title}</h2>
@@ -31,7 +32,7 @@ function FullscreenMessageDialog(props: Props) {
         <div className={styles.cardContent}>{props.children}</div>
         {props.buttons && <div className={styles.cardButtons}>{props.buttons}</div>}
       </div>
-    </div>
+    </Layer>
   )
 }
 

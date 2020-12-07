@@ -1,8 +1,9 @@
+import {Layer, Portal} from '@sanity/ui'
 import classNames from 'classnames'
 import SpinnerIcon from 'part:@sanity/base/spinner-icon'
 import styles from 'part:@sanity/components/loading/spinner-style'
 import React from 'react'
-import {Portal} from '../utilities/Portal'
+// import {Portal} from '../utilities/Portal'
 
 interface SpinnerProps {
   center?: boolean
@@ -56,7 +57,13 @@ export default class Spinner extends React.PureComponent<
     )
 
     if (fullscreen) {
-      return <Portal>{root}</Portal>
+      return (
+        <Portal>
+          <Layer className={styles.fullscreenLayer} depth={1060}>
+            {root}
+          </Layer>
+        </Portal>
+      )
     }
 
     return root

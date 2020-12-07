@@ -1,3 +1,4 @@
+import {Layer} from '@sanity/ui'
 import React from 'react'
 import classNames from 'classnames'
 import {ChangeIndicatorWithProvidedFullPath} from '@sanity/base/lib/change-indicators'
@@ -62,7 +63,7 @@ export default function BlockExtras(props: Props) {
       content
     )
   return (
-    <div
+    <Layer
       className={classNames([
         styles.root,
         hasFocus && styles.hasFocus,
@@ -70,9 +71,10 @@ export default function BlockExtras(props: Props) {
         errors.length > 0 && styles.withError,
         warnings.length > 0 && !errors.length && styles.withWarning,
       ])}
+      depth={1060}
     >
       {returned}
-    </div>
+    </Layer>
   )
 }
 
