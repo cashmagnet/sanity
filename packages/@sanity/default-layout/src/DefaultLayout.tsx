@@ -1,3 +1,4 @@
+import {Layer} from '@sanity/ui'
 import React from 'react'
 import {Subscription} from 'rxjs'
 import AppLoadingScreen from 'part:@sanity/base/app-loading-screen'
@@ -142,19 +143,25 @@ class DefaultLayout extends React.PureComponent<Props, State> {
     return (
       <div className={className} onClickCapture={this.handleClickCapture}>
         {this.state.showLoadingScreen && (
-          <div
+          <Layer
             className={
               this.state.loaded || document.visibilityState == 'hidden'
                 ? styles.loadingScreenLoaded
                 : styles.loadingScreen
             }
+            depth={5000}
             ref={this.setLoadingScreenElement}
           >
             <AppLoadingScreen text="Restoring Sanity" />
-          </div>
+          </Layer>
         )}
 
-        <div className={styles.navbar}>
+        <Layer
+          className={styles.navbar}
+          // @todo: Convert to functional component and change to:
+          // depth={zindex.navbar}
+          depth={1000}
+        >
           <NavbarContainer
             tools={tools}
             createMenuIsOpen={createMenuIsOpen}
@@ -168,7 +175,7 @@ class DefaultLayout extends React.PureComponent<Props, State> {
             onSearchOpen={this.handleSearchOpen}
             onSearchClose={this.handleSearchClose}
           />
-        </div>
+        </Layer>
 
         <div className={styles.sideMenuContainer}>
           <SideMenu

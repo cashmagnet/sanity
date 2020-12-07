@@ -44,7 +44,7 @@ export default {
     },
     {
       name: 'arrayOfMultipleTypes',
-      title: 'Array of multiple types',
+      title: 'Array of multiple types (popover)',
       type: 'array',
       of: [
         {
@@ -70,6 +70,9 @@ export default {
           ],
         },
       ],
+      options: {
+        editModal: 'popover',
+      },
     },
     {
       name: 'arrayOfMultipleTypesPopover',

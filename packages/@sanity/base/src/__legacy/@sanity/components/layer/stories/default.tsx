@@ -1,4 +1,4 @@
-import {Layer, LayerProvider, useLayer} from 'part:@sanity/components/layer'
+import {Layer, LayerProvider, useLayer} from '@sanity/ui'
 import React, {useCallback, useState} from 'react'
 
 export function DefaultStory() {

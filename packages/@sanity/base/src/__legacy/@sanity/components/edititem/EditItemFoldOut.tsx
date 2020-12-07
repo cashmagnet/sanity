@@ -1,11 +1,11 @@
 import {Modifier} from '@popperjs/core'
+import {Layer, Portal, useLayer} from '@sanity/ui'
 import CloseIcon from 'part:@sanity/base/close-icon'
 import DefaultButton from 'part:@sanity/components/buttons/default'
 import styles from 'part:@sanity/components/edititem/fold-style'
-import {Layer, useLayer} from 'part:@sanity/components/layer'
-import {Portal} from 'part:@sanity/components/portal'
 import React, {forwardRef, useEffect, useState} from 'react'
 import {usePopper} from 'react-popper'
+import {useZIndex} from '../../../../components'
 
 interface EditItemFoldOutProps {
   title?: string
@@ -73,6 +73,7 @@ const EditItemFoldOutChildren = forwardRef(
 EditItemFoldOutChildren.displayName = 'EditItemFoldOutChildren'
 
 function EditItemFoldOut(props: EditItemFoldOutProps) {
+  const zindex = useZIndex()
   const {title = '', onClose, children, referenceElement: referenceElementProp, style = {}} = props
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null)
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null)
@@ -106,7 +107,7 @@ function EditItemFoldOut(props: EditItemFoldOutProps) {
 
   const popperNode = (
     <Portal>
-      <Layer>
+      <Layer depth={zindex.portal}>
         <EditItemFoldOutChildren
           onClose={onClose}
           ref={setPopperElement}

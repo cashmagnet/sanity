@@ -10,37 +10,11 @@
   }
 } */
 
-@keyframes popoverDialogBackgroundFadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 :root {
   --array--add-item-color: var(--brand-primary);
   --array--add-item-triangle-color: color(
     var(--form-builder--array--add-item-color) lightness(- 20%)
   );
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: var(--backdrop-color);
-  opacity: 0.75;
-  z-index: var(--zindex-portal);
-  pointer-events: none;
-  animation-name: popoverDialogBackgroundFadeIn;
-  animation-duration: 0.2s;
-  animation-timing-function: cubic-bezier(0, 0, 0, 1);
-  animation-iteration-count: once;
 }
 
 .root {
@@ -70,19 +44,19 @@
   @nest &[data-popper-reference-hidden='true'] {
     display: none;
   }
+
+  @nest & > div {
+    max-height: 50vh;
+  }
+
+  @nest .root[data-color='danger'] & > div {
+    background-color: var(--state-danger-color);
+    color: var(--state-danger-color--inverted);
+  }
 }
 
 .arrow {
   /* Popover's arrow element */
-}
-
-.card {
-  max-height: 50vh;
-
-  @nest .root[data-color='danger'] & {
-    background-color: var(--state-danger-color);
-    color: var(--state-danger-color--inverted);
-  }
 }
 
 .popperAnimation {

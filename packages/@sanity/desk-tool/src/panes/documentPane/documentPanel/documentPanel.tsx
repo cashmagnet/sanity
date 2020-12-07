@@ -1,10 +1,10 @@
 import {MenuItemGroup} from '@sanity/base/__legacy/@sanity/components'
-import {Card} from '@sanity/ui'
+import {Card, Layer, PortalProvider, usePortal} from '@sanity/ui'
 import classNames from 'classnames'
-import {PortalProvider, usePortal} from 'part:@sanity/components/portal'
 import {ScrollContainer} from 'part:@sanity/components/scroll'
 import React, {createElement, useCallback, useMemo, useRef} from 'react'
 import {Path} from '@sanity/types'
+import {useZIndex} from '@sanity/base/components'
 import {useDeskToolFeatures} from '../../../features'
 import {useDocumentHistory} from '../documentHistory'
 import {Doc, DocumentView} from '../types'
@@ -56,7 +56,7 @@ interface DocumentPanelProps {
 
 export function DocumentPanel(props: DocumentPanelProps) {
   const {toggleInspect, isHistoryOpen, views, activeViewId} = props
-
+  const zindex = useZIndex()
   const parentPortal = usePortal()
   const features = useDeskToolFeatures()
   const portalRef = useRef<HTMLDivElement | null>(null)
@@ -113,7 +113,7 @@ export function DocumentPanel(props: DocumentPanelProps) {
 
   return (
     <Card className={classNames(styles.root, props.isCollapsed && styles.isCollapsed)}>
-      <div className={styles.headerContainer}>
+      <Layer className={styles.headerContainer} depth={zindex.pane}>
         <DocumentPanelHeader
           activeViewId={props.activeViewId}
           idPrefix={props.idPrefix}
@@ -146,7 +146,7 @@ export function DocumentPanel(props: DocumentPanelProps) {
           rev={revTime}
           isHistoryOpen={isHistoryOpen}
         />
-      </div>
+      </Layer>
 
       <PortalProvider element={portalElement}>
         <div className={styles.documentViewerContainer}>

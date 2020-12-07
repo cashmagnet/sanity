@@ -15,10 +15,10 @@ import {
   HotkeyOptions,
 } from '@sanity/portable-text-editor'
 import {Path, isKeySegment, Marker, isKeyedObject} from '@sanity/types'
+import {Layer} from '@sanity/ui'
 import {uniqueId, isEqual} from 'lodash'
 import ActivateOnFocus from 'part:@sanity/components/utilities/activate-on-focus'
 import {ChangeIndicatorWithProvidedFullPath} from '@sanity/base/lib/change-indicators'
-import {Layer} from 'part:@sanity/components/layer'
 import PatchEvent from '../../PatchEvent'
 import {BoundaryElementProvider} from './boundaryElement'
 import styles from './PortableTextInput.css'

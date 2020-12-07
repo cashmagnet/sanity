@@ -1,12 +1,13 @@
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-datepicker/dist/react-datepicker-cssmodules.css'
 
+import {Layer, TextInput} from '@sanity/ui'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import moment, {Moment} from 'moment'
 import DatePicker from 'react-datepicker'
 import {isValidationErrorMarker, Marker} from '@sanity/types'
-import {TextInput} from '@sanity/ui'
+
 import Button from 'part:@sanity/components/buttons/default'
 import CalendarIcon from 'part:@sanity/base/calendar-icon'
 import {uniqueId} from 'lodash'
@@ -107,7 +108,9 @@ export default class BaseDateTimeInput extends React.Component<Props, State> {
   renderPopperContainer = ({children}) => {
     const {isDialogOpen} = this.state
     return ReactDOM.createPortal(
-      <div className={isDialogOpen ? styles.portal : styles.portalClosed}>{children}</div>,
+      <Layer className={isDialogOpen ? styles.portal : styles.portalClosed} depth={1060}>
+        {children}
+      </Layer>,
       document.body
     )
   }
